@@ -1,0 +1,19 @@
+<hr>
+    Registration Of User
+<hr>
+
+<form action="{% url 'useractivity:registration' %}" method="POST">
+    {% csrf_token %}
+    <table>
+        {% for field in form %}
+        <tr>
+            <td>{{ field.label }} </td>
+            <td>{{ field }}</td>
+            <td>{{ field.errors }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3"><button type="submit">Registration</button></td>
+        </tr>
+    </table>
+</form>
