@@ -1,21 +1,17 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.views.generic import TemplateView,View
 
 from django.contrib.auth.forms import authenticate
-from django.contrib.auth import login,logout
+from django.contrib.auth import login,logout,update_session_auth_hash
 from django.contrib import messages
 
-from .forms import RegistrationForm,LoginForm
-
+from .forms import RegistrationForm,LoginForm,ProfileForm,Change_passwordForm
+from .models import Profile
 
 class IndexTemplateView(TemplateView):
     ''' index url view render index.html '''
     template_name = 'useractivity/index.html'
-
-class ProfileTemplateView(TemplateView):
-    ''' profile url view render myprofile.html '''
-    template_name = 'useractivity/myprofile.html'
 
 class RegistrationCBView(View):
     ''' registration url view for Regisration of user '''
@@ -72,3 +68,46 @@ class LogoutCBView(View):
         messages.success(request,'Logout Success.!!')
         logout(request)
         return redirect('useractivity:login')
+
+class ChangePasswordCBView(View):
+    ''' change_password url view '''
+    def post(self,request):
+        ''' change password when post req'''
+        pass_chng_form = Change_passwordForm(request.user,request.POST)
+        if pass_chng_form.is_valid():
+            user=pass_chng_form.save()
+            update_session_auth_hash(request,user)
+            messages.success(request,'Password Was Successfully Updated..!!')
+            return redirect('useractivity:profile')
+        else:
+            messages.error(request,'Please Correct the error below.')
+            context={'form':ProfileForm(instance=request.user.profile)}
+            context['passwordform'] = pass_chng_form
+            context['passwordtab']='passwordtab'
+        return render(request,'useractivity/myprofile.html',context)
+
+        
+class ProfileCBView(View):
+    ''' profile url view render myprofile.html '''
+    def get(self,request):
+        context={'form':ProfileForm(instance=request.user.profile)}
+        context['passwordform'] = Change_passwordForm(request.user)
+        return render(request,'useractivity/myprofile.html',context)
+
+    def post(self,request):        
+        profile_form = ProfileForm(request.POST or None,instance=request.user.profile)
+        if profile_form.is_valid():
+            user=profile_form.save(commit=False)
+            user.user=request.user
+            user.save()
+            messages.success(request,"Profile Information Updated..!!")
+            return redirect('useractivity:profile')
+
+        return render(request,'useractivity/myprofile.html',{'form':profile_form})
+
+class Profile_uploadCBView(View):
+   
+    def post(self,request):
+        request.user.profile.profile=request.FILES['image']
+        request.user.profile.save()
+        return JsonResponse(status=200,data={'url':request.user.profile.profile.url})
