@@ -57,11 +57,7 @@
                      data-toggle="tab">Profile</a>
                   <a class="list-group-item list-group-item-action" href="#passwordtab" data-toggle="tab">Change
                      Password</a>
-                  {% if passwordtab %} 
-                     <script> 
-                        window.location.href = '#{{ passwordtab }}';                        
-                     </script>
-                  {% endif %}
+                  
                   <!-- <a class="list-group-item list-group-item-action" href="#tabSetting3" data-toggle="tab">Emails</a> -->
                   <!-- <a class="list-group-item list-group-item-action" href="#tabSetting4" data-toggle="tab">Notifications</a> -->
                   <!-- <a class="list-group-item list-group-item-action" href="#tabSetting5" data-toggle="tab">Applications</a> -->
@@ -114,7 +110,14 @@
                            {% for field in passwordform %}
                            <div class="form-group">{{field.label}}
                               {{field}}
+                              {% if field.errors %}
+                              <div class="text text-danger">
+                                 {{ field.errors }}
+                              </div>
+                           {% endif %}
                            </div>
+
+                          
                            {% endfor %}
                            <button class="btn btn-info" type="submit">Update
                               password</button>
@@ -136,6 +139,17 @@
 
 
 {% block script %}
+
+   {% if passwordtab %} 
+      <script> 
+         $(document).ready(function () {
+            $("a[href='#passwordtab']").addClass('active');
+            $("a[href='#profiletab']").removeClass('active');
+            $('#{{ passwordtab }}').addClass('active');
+            $('#profiletab').removeClass('active');
+         });
+      </script>
+   {% endif %}
 
 <script src="{% static 'js/profile_upload.js' %}"></script>
 

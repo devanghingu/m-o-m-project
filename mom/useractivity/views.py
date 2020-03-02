@@ -108,6 +108,11 @@ class ProfileCBView(View):
 class Profile_uploadCBView(View):
    
     def post(self,request):
-        request.user.profile.profile=request.FILES['image']
-        request.user.profile.save()
-        return JsonResponse(status=200,data={'url':request.user.profile.profile.url})
+
+        if request.user.is_authenticated:
+            request.user.profile.profile=request.FILES['image']
+            request.user.profile.save()
+            return JsonResponse(status=200,data={'url':request.user.profile.profile.url})
+        else:
+            return JsonResponse(status=203,data={'error':'unauthorize request.!!'})
+            

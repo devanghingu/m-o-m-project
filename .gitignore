@@ -1,4 +1,5 @@
 mom/media
 mom/db.sqlite3
-mom/__*
-
+*/__*
+mom/meeting/__*
+*.pyc

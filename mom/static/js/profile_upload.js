@@ -25,7 +25,7 @@ $(document).ready(function(){
                     $('#profile_pic').attr('src',data.url)
                 },
                 error:function(error){
-                    alert(error)
+                    alert(error.error)
                 }
             });
             return false;

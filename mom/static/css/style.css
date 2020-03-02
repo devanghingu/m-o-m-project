@@ -10,3 +10,23 @@
 #recorder{
     margin: auto; 
 }
+
+/** meetingtext css **/
+
+.showbtn {
+    display: none;
+    position: fixed;
+    padding: 5px;
+    border-radius:5px;
+    background: white;
+    border: 1px solid #474747;
+    box-shadow: 2px 1px 21px 1px;
+
+    animation: 3s ease 5s 9 normal none running cubic-bezier;
+  }
+
+.list-group-item{
+    margin-top: 10px !important;
+    border-radius: 10px  !important;
+} 
+/** end meeting text css **/
