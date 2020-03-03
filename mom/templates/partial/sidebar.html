@@ -83,58 +83,33 @@
            -->
                <li class="">
                   <a href="{% url 'useractivity:profile' %}">
+                     <em class="fa fa-handshake"></em>
+                     <span data-localize="sidebar.nav.chart.CHART">Meetings</span>
+                  </a>
+               </li>
+               <li class="">
+                  <a href="{% url 'useractivity:profile' %}">
                      <em class="fa fa-user"></em>
                      <span data-localize="sidebar.nav.chart.CHART">Profile Settings</span>
                   </a>
                </li>
-
-
                <li class="nav-heading "><span data-localize="sidebar.heading.MORE">More</span></li>
 
-               <li class=" "><a href="#extras" title="Extras" data-toggle="collapse"><em class="icon-cup"></em><span
-                        data-localize="sidebar.nav.extra.EXTRA">Extras</span></a>
+               <li class=" "><a href="#extras" title="Extras" data-toggle="collapse"><em class="icon-cup"></em><span data-localize="sidebar.nav.extra.EXTRA">Extras</span></a>
                   <ul class="sidebar-nav sidebar-subnav collapse" id="extras">
                      <li class="sidebar-subnav-header">Extras</li>
-                     <li class=" "><a href="#blog" title="Blog" data-toggle="collapse"><em
-                              class="fas fa-angle-right"></em><span>Blog</span></a>
+                     <li class=" "><a href="#blog" title="Blog" data-toggle="collapse"><em class="fas fa-angle-right"></em><span>Blog</span></a>
                         <ul class="sidebar-nav sidebar-subnav collapse" id="blog">
                            <li class="sidebar-subnav-header">Blog</li>
                            <li class=" "><a href="blog.html" title="List"><span>List</span></a></li>
                            <li class=" "><a href="blog-post.html" title="Post"><span>Post</span></a></li>
                            <li class=" "><a href="blog-articles.html" title="Articles"><span>Articles</span></a></li>
-                           <li class=" "><a href="blog-article-view.html" title="Article View"><span>Article
-                                    View</span></a></li>
+                           <li class=" "><a href="blog-article-view.html" title="Article View"><span>Article View</span></a></li>
                         </ul>
                      </li>
                   </ul>
                </li>
-               <li class=" "><a href="#multilevel" title="Multilevel" data-toggle="collapse"><em
-                        class="far fa-folder-open"></em><span>Multilevel</span></a>
-                  <ul class="sidebar-nav sidebar-subnav collapse" id="multilevel">
-                     <li class="sidebar-subnav-header">Multilevel</li>
-                     <li class=" "><a href="#level1" title="Level 1" data-toggle="collapse"><span>Level 1</span></a>
-                        <ul class="sidebar-nav sidebar-subnav collapse" id="level1">
-                           <li class="sidebar-subnav-header">Level 1</li>
-                           <li class=" "><a href="multilevel-1.html" title="Level1 Item"><span>Level1 Item</span></a>
-                           </li>
-                           <li class=" "><a href="#level2" title="Level 2" data-toggle="collapse"><span>Level
-                                    2</span></a>
-                              <ul class="sidebar-nav sidebar-subnav collapse" id="level2">
-                                 <li class="sidebar-subnav-header">Level 2</li>
-                                 <li class=" "><a href="#level3" title="Level 3" data-toggle="collapse"><span>Level
-                                          3</span></a>
-                                    <ul class="sidebar-nav sidebar-subnav collapse" id="level3">
-                                       <li class="sidebar-subnav-header">Level 3</li>
-                                       <li class=" "><a href="multilevel-3.html" title="Level3 Item"><span>Level3
-                                                Item</span></a></li>
-                                    </ul>
-                                 </li>
-                              </ul>
-                           </li>
-                        </ul>
-                     </li>
-                  </ul>
-               </li>
+               
             </ul><!-- END sidebar nav-->
          </nav>
       </div><!-- END Sidebar (left)-->
