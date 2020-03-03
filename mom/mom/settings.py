@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'useractivity.apps.UseractivityConfig',
+    'meeting.apps.MeetingConfig',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,9 @@ STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 ]
 # static_root=""
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS ={

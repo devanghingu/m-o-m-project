@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block body %}    
+<section class="section-container">
+    <!-- Page content-->
+    <div class="content-wrapper">
+       <div class="content-heading">Your meeting words</div><!-- START row-->
+      
+       <!-- END row-->
+       <!-- START row-->
+       <div class="row">
+          
+          <div class="offset-md-1 col-xl-10 col-md-10 col-xs-10">
+             <!-- START card-->
+             <div class="card card-default">
+                <div class="card-header"><h4>Meeting All Text<h4><hr/></div>
+                <div class="card-body">
+                   <div class="showbtn"><button class="btn btn-primary" onclick="getSelectedText(event)">copy</button></div>
+                   <blockquote>
+                      <p>
+                         <span id="meetingtext" class="selectable" onclick="showButton(event)">
+                         </span>
+                      </p>
+                   </blockquote>
+                </div>
+             </div>
+             <!-- END card-->
+          </div>
+          
+       </div><!-- END row-->
+       <div class="row">
+           <div class="offset-md-1 col-xl-10 col-md-10 col-xs-10">
+            <h3>Notes : </h3>  
+             <ul class="list-group sortable" aria-dropeffect="move">
+             </ul>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-11 col-sm-6 col-xs-6 text-right">
+                <button type="button"class="btn btn-primary" id="done">Done</button>
+            </div>
+        </div>
+    </div>
+ </section>{% endblock body %}
+ {% block script %}
+        <script src="{% static 'vendor/html5sortable/dist/html5sortable.js' %}"></script>
+        <script src="{% static 'js/meetingtext.js' %}"></script>
+ {% endblock script %}

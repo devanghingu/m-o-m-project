@@ -163,10 +163,12 @@ function AjaxRequest(){
       success:function(data){
           response_text.push(data['data'])
           response_counter+=1;
-          if(request_counter==response_counter){
+          if(request_counter==response_counter && state==0 ){
               $('#loader-audio').attr('hidden','true');
               $('#canvas-area').show();
               $('#record-meeting').removeAttr('disabled');
+              localStorage.setItem('response_text',JSON.stringify({"response_text":response_text}));
+              window.location.replace('/meetingtext');
             }
         },
     });
@@ -181,5 +183,4 @@ window.onbeforeunload = function(){
   console.log('hello----d')
   return 'Are you sure you want to leave?';
 };
-
 //})();
