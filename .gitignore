@@ -3,3 +3,5 @@ mom/db.sqlite3
 */__*
 mom/meeting/__*
 *.pyc
+mom/mom/__*
+
