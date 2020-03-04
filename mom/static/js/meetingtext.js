@@ -1,3 +1,5 @@
+let meeting_text;
+let item;
 function edit_item_can_btn(){ 
    $('#meetingtext').html(meeting_text);
    $('#meetingtext').attr('onclick','showButton(event)');
@@ -42,7 +44,6 @@ $(document).on("click", function(e) {
    e.stopPropagation();
    $('.showbtn').hide();
 });
-let item;
 $('#done').click(function(){
    item = [];
    $('.sortable').each(function(){
@@ -52,17 +53,6 @@ $('#done').click(function(){
    });
 });
 
-
-$(document).ready(function(){
-   var meeting_text = $('#meetingtext').text();
-   obj = JSON.parse(localStorage.getItem('response_text'));
-   for(txt of obj.response_text){
-      meeting_text += txt;   
-   }
-   $('#meetingtext').text(meeting_text);
-});
-
-let meeting_text;
 $(document).ready(function(){
    $('#edit-meeting-btn').click(function(){
       meeting_text = $('#meetingtext').text();

@@ -13,7 +13,7 @@
           <div class="offset-md-1 col-xl-10 col-md-10 col-xs-10">
              <!-- START card-->
              <div class="card card-default">
-                <div class="card-header"><h4>Meeting All Text<h4>
+                <div class="card-header"><h4>Name : <u>{{meetingdata.name |title}}</u><h4>
                   <div id="edit-meeting-btn-div">
                      <button type="button" id="edit-meeting-btn" class="btn btn-info">Edit</button> 
                   </div>
@@ -23,7 +23,7 @@
                    <div class="showbtn"><button class="btn btn-primary" onclick="getSelectedText(event)">copy</button></div>
                    <blockquote>
                       <p id="editablemeetingtext">
-                         <pre id="meetingtext" class="selectable" onclick="showButton(event)" wrap="hard"></pre>
+                         <pre id="meetingtext" class="selectable" onclick="showButton(event)" wrap="hard">{{meetingdata.meetingtext}}</pre>
 
                       </p>
                    </blockquote>
@@ -48,9 +48,10 @@
             </div>
         </div>
     </div>
- </section>{% endblock body %}
+ </section>
+ {% endblock body %}
  {% block script %}
-        <script src="{% static 'vendor/html5sortable/dist/html5sortable.js' %}"></script>
-        <!-- <script src="{% static 'vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js' %}"></script> -->
-        <script src="{% static 'js/meetingtext.js'%}"></script>
+      <script src="{% static 'vendor/html5sortable/dist/html5sortable.js' %}"></script>
+      <!-- <script src="{% static 'vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js' %}"></script> -->
+      <script src="{% static 'js/meetingtext.js'%}"></script>
  {% endblock script %}

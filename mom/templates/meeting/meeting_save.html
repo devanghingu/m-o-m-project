@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static  %}
+{% block body %}    
+   <section class="section-container">
+    <!-- Page content-->
+      <div class="content-wrapper">
+         <div class="content-heading">Small Title To Your Meeting</div>
+         <!-- START row-->
+         <div class="row">
+            <div class="offset-md-2 col-md-8">
+               <div class="card card-default">
+                  <div class="card-header"> Give Your Meeting Name</div>
+                  <div class="card-body">
+                     <form method="POST" name="savemeeting"> {%csrf_token%}
+                        <div class="form-row align-items-center">
+                           <div class="col-md-10 col-xs-12 col-sm-8">
+                              
+                              {% for field in meetingname %}
+                                 {{field}}
+                                 {{field.errors}}
+                              {% endfor %}
+                           </div>
+                           <div class="col-md-2 col-xs-4 col-sm-4"><button class="btn btn-primary mb-2" type="submit" onclick="">Continue</button></div>
+                        </div>
+                     </form>
+                  </div>
+               </div>    
+            </div>          
+         </div>
+         <!-- END row-->
+      </div>
+   </section>
+{% endblock body %}
+{% block script %}
+<script>
+  $(document).ready(function(){
+     var meeting_text = '';
+     obj = JSON.parse(localStorage.getItem('response_text'));
+     for(txt of obj.response_text){
+        meeting_text += txt;   
+     }
+     console.log(meeting_text);
+     $('#id_meetingtext').attr('value', meeting_text);
+  });
+</script>
+ {% endblock script %}
+
+
+meetingid->noted_id
+{1:{1:'notes',2:'notea'}}
+

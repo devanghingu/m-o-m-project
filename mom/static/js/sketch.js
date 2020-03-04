@@ -52,7 +52,7 @@ $(document).ready(function(){
   
   /**  Start Meeting button and Resume button **/
   $('#record-meeting').click(function(){
-    
+      CheckServerResponse();
       if (media_state === 0 && mic.enabled){
           getAudioContext().resume()
           recorder = new p5.SoundRecorder();
@@ -92,7 +92,7 @@ $(document).ready(function(){
     }else if(request_counter==response_counter && stop_meeting==1){
       /** when stop meeting after meeting pause **/
       localStorage.setItem('response_text',JSON.stringify({"response_text":response_text}));
-      window.location.replace('/meetingtext');
+      window.location.replace('meeting/save');
     }
     $(this).attr('hidden','true');
     $('#record-meeting').html('Start Meeting')
@@ -120,13 +120,18 @@ function CheckServerResponse(){
     processData: false,
     contentType:false,
     success:function(data){
-     
+      $('#loader-audio').prop('hidden','true');
+      $('#record-meeting').removeAttr('disabled');
+      $('#canvas-area').show();
+      $('#record-message').hide();
     },
     error: function(){
       $('#record-message').html("<u>Opps..!!</u> <b>M-O-M is down right now.</b> contact administrator for more.!!!");
       $('#loader-audio').removeAttr('hidden');
       $('#record-meeting').prop('disabled','true');
       $('#canvas-area').hide();
+      $('#record-message').show();
+      setInterval(CheckServerResponse,10000);
     },
     timeout:5000
   });
@@ -164,11 +169,11 @@ function AjaxRequest(){
           response_counter+=1;
           console.log(request_counter+" "+response_counter);
           if(request_counter==response_counter && stop_meeting==1){
-              $('#loader-audio').attr('hidden','true');
-              $('#canvas-area').show();
-              $('#record-meeting').removeAttr('disabled');
+              // $('#loader-audio').attr('hidden','true');
+              // $('#canvas-area').show();
+              // $('#record-meeting').removeAttr('disabled');
               localStorage.setItem('response_text',JSON.stringify({"response_text":response_text}));
-              window.location.replace('/meetingtext');
+              window.location.replace('meeting/save');
             }
         },
     });
