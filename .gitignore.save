@@ -1,0 +1,8 @@
+mom/media
+mom/db.sqlite3
+*/__*
+mom/meeting/__*
+*.pyc
+hint: Fix them up in the work tree, and then use 'git add/rm <file>'
+hint: as appropriate to mark resolution and make a commit.
+

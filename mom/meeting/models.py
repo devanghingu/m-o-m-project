@@ -10,5 +10,5 @@ class Meeting(models.Model):
 class Notes(models.Model):
     name        =   models.CharField(max_length=50,blank=True)
     description =   models.TextField(blank=True)
-    meeting     =   models.ManyToManyField(Meeting,on_delete=models.CASCADE)
+    meeting     =   models.ManyToManyField(Meeting)
     # subnotes    =   models.ForeignKey(Notes, on_delete=models.CASCADE)
