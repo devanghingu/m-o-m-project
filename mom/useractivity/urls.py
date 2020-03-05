@@ -20,8 +20,12 @@ urlpatterns = [
     path("login", LoginCBView.as_view(), name="login"),
     path("logout", LogoutCBView.as_view(), name="logout"),
     path("profile", ProfileCBView.as_view(), name="profile"),
-    path("profile_upload", Profile_uploadCBView.as_view(), name="profile_upload"),
-    path("change_password", ChangePasswordCBView.as_view(), name="change_password"),
+    path("profile_upload",
+         Profile_uploadCBView.as_view(),
+         name="profile_upload"),
+    path("change_password",
+         ChangePasswordCBView.as_view(),
+         name="change_password"),
     path(
         "password-reset/",
         auth_views.PasswordResetView.as_view(
@@ -35,8 +39,7 @@ urlpatterns = [
     path(
         "password-reset/done/",
         auth_views.PasswordResetDoneView.as_view(
-            template_name="registration/password_reset_done.html",
-        ),
+            template_name="registration/password_reset_done.html", ),
         name="password_reset_done",
     ),
     path(
@@ -50,11 +53,11 @@ urlpatterns = [
     path(
         "password-reset-complete/",
         auth_views.PasswordResetCompleteView.as_view(
-            template_name="registration/password_reset_complete.html"
-        ),
+            template_name="registration/password_reset_complete.html"),
         name="password_reset_complete",
     ),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

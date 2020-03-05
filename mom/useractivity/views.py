@@ -45,9 +45,8 @@ class RegistrationCBView(View):
             messages.success(request, "Registration Success..!!")
             return redirect("useractivity:login")
 
-        return render(
-            request, "useractivity/register.html", {"form": registration_form}
-        )
+        return render(request, "useractivity/register.html",
+                      {"form": registration_form})
 
 
 class LoginCBView(View):
@@ -72,7 +71,8 @@ class LoginCBView(View):
                 return redirect("useractivity:index")
             else:
                 context = {"form": login_form}
-                messages.error(request, "Oops..!! Invalid username and password ")
+                messages.error(request,
+                               "Oops..!! Invalid username and password ")
                 return render(request, "useractivity/login.html", context)
         messages.error(request, "Invalid Input Please Enter Valid information")
         return render(request, "useractivity/login.html", {"form": login_form})
@@ -118,7 +118,8 @@ class ProfileCBView(View):
         return render(request, "useractivity/myprofile.html", context)
 
     def post(self, request):
-        profile_form = ProfileForm(request.POST or None, instance=request.user.profile)
+        profile_form = ProfileForm(request.POST or None,
+                                   instance=request.user.profile)
         if profile_form.is_valid():
             user = profile_form.save(commit=False)
             user.user = request.user
@@ -126,7 +127,8 @@ class ProfileCBView(View):
             messages.success(request, "Profile Information Updated..!!")
             return redirect("useractivity:profile")
 
-        return render(request, "useractivity/myprofile.html", {"form": profile_form})
+        return render(request, "useractivity/myprofile.html",
+                      {"form": profile_form})
 
 
 @method_decorator(login_required, name="dispatch")
@@ -136,8 +138,8 @@ class Profile_uploadCBView(View):
         if request.user.is_authenticated:
             request.user.profile.profile = request.FILES["image"]
             request.user.profile.save()
-            return JsonResponse(
-                status=200, data={"url": request.user.profile.profile.url}
-            )
+            return JsonResponse(status=200,
+                                data={"url": request.user.profile.profile.url})
         else:
-            return JsonResponse(status=203, data={"error": "unauthorize request.!!"})
+            return JsonResponse(status=203,
+                                data={"error": "unauthorize request.!!"})
