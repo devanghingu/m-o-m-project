@@ -1,2 +1,2 @@
-*.pycy
 db.sqlite3
+*.pyc

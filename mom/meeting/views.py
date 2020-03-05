@@ -42,7 +42,7 @@ class SaveMeetingCBView(View):
             meeting=meetingname.save(commit=False)
             meeting.user=request.user
             meeting.save()
-            return redirect('meeting:meetingtext',{'meeting_id':meeting.id})
+            return redirect('meeting:meetingtext',meeting_id=meeting.id)
         return render(request,'meeting/meeting_save.html',{'meetingname':meetingname})
 
                         

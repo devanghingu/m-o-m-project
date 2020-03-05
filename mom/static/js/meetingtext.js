@@ -100,7 +100,6 @@ let note_textarea ="<div style='margin-top:5px;text-align:right;'>"+
 $(document).on('click','a#edit_note_btn',function(){
    var note = $(this).closest('li');
    note_text=note.text();
-   console.log(note_text);note_text
    var textarea = "<div style='float:left;'><textarea class='form-control input-large' id='note-textarea' onkeypress='expandtextarea_note(event)' placeholder='you can add new content' wrap='hard'  cols='110'></textarea></div>"; 
    note.html(textarea+note_textarea);
    $('#note-textarea').height($('#note-textarea')[0].scrollHeight);
@@ -112,7 +111,7 @@ $(document).on('click','a#edit_note_btn',function(){
 });
 
 $(document).on('click','a#remove_note_btn',function(){
-   console.log($(this).closest('li').remove());
+   $(this).closest('li').remove();
 });
 
 $(document).on('click','button#note_save_btn',function(){
