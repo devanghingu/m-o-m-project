@@ -35,7 +35,7 @@ class RegistrationCBView(View):
 
     def post(self, request):
         """
-            get data from the index.html and save in db 
+            get data from the index.html and save in db
             Register of User
         """
         registration_form = RegistrationForm(request.POST)
