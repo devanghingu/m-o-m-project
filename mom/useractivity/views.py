@@ -5,6 +5,8 @@ from django.views.generic import TemplateView,View
 from django.contrib.auth.forms import authenticate
 from django.contrib.auth import login,logout,update_session_auth_hash
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .forms import RegistrationForm,LoginForm,ProfileForm,Change_passwordForm
 from .models import Profile
@@ -39,7 +41,7 @@ class LoginCBView(View):
     ''' login url view login thought predefine AuthenticationForm form '''
     def get(self,request):
         ''' render authentication form in index html '''
-        context = {'form':LoginForm()}
+        context = {'form':LoginForm()}        
         return render(request,'useractivity/login.html',context)
 
     def post(self,request):
@@ -52,8 +54,8 @@ class LoginCBView(View):
             user=authenticate(username=user,password=password)
 
             if user:
-                login(request,user)
-                return redirect('useractivity:index')
+                    login(request,user)
+                    return redirect('useractivity:index')
             else:
                 context = {'form':login_form}
                 messages.error(request,'Oops..!! Invalid username and password ')
@@ -69,6 +71,8 @@ class LogoutCBView(View):
         logout(request)
         return redirect('useractivity:login')
 
+
+@method_decorator(login_required,name='dispatch')
 class ChangePasswordCBView(View):
     ''' change_password url view '''
     def post(self,request):
@@ -86,7 +90,8 @@ class ChangePasswordCBView(View):
             context['passwordtab']='passwordtab'
         return render(request,'useractivity/myprofile.html',context)
 
-        
+
+@method_decorator(login_required,name='dispatch')        
 class ProfileCBView(View):
     ''' profile url view render myprofile.html '''
     def get(self,request):
@@ -105,6 +110,7 @@ class ProfileCBView(View):
 
         return render(request,'useractivity/myprofile.html',{'form':profile_form})
 
+@method_decorator(login_required,name='dispatch')
 class Profile_uploadCBView(View):
    
     def post(self,request):

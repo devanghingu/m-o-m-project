@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'meeting.apps.MeetingConfig',
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # During development only
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -117,6 +119,9 @@ USE_L10N = True
 USE_TZ = True
 
 
+LOGIN_URL='/login'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -136,3 +141,19 @@ MESSAGE_TAGS ={
     messages.SUCCESS:'alert-success',
     messages.ERROR:'alert-danger',
 } 
+
+# SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_PORT = 587    
+# EMAIL_HOST_USER = 'apikey'
+# EMAIL_HOST_PASSWORD = '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'
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'M-O-M Site Team <noreply@example.com>'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'kalpeshmakwna2610@gmail.com'
+EMAIL_HOST_PASSWORD = 'imothsgzlpfszbgj'
+DEFAULT_FROM_EMAIL = 'M-O-M Site Team <noreply@example.com>'

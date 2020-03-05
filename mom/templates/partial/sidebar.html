@@ -76,12 +76,12 @@
                </li><!-- END user info-->
                <!-- Iterates over all sidebar items-->
                <li class="nav-heading "><span data-localize="sidebar.heading.HEADER">Main Navigation</span></li>
-               <li class="active"><a href="{% url 'useractivity:index' %}">
+               <li {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}><a href="{% url 'useractivity:index' %}">
                      <em class="fa fa-home"></em>
                      <span>Home</span></a></li>
                <!-- <li class="nav-heading "><span data-localize="sidebar.heading.COMPONENTS">Components</span></li>
            -->
-               <li class="">
+               <li {% if request.resolver_match.url_name == 'profile' %}class="active"{% endif %}>
                   <a href="{% url 'useractivity:profile' %}">
                      <em class="fa fa-handshake"></em>
                      <span data-localize="sidebar.nav.chart.CHART">Meetings</span>
