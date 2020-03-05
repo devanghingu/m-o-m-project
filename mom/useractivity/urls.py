@@ -1,17 +1,16 @@
-from django.urls import path
 from django.conf.urls import url
 from django.conf.urls.static import static
-from mom import settings
-from .views import (
-    IndexTemplateView,
-    RegistrationCBView,
-    LoginCBView,
-    LogoutCBView,
-    ProfileCBView,
-    Profile_uploadCBView,
-    ChangePasswordCBView,
-)
 from django.contrib.auth import views as auth_views
+from django.urls import path
+
+from .views import ChangePasswordCBView
+from .views import IndexTemplateView
+from .views import LoginCBView
+from .views import LogoutCBView
+from .views import Profile_uploadCBView
+from .views import ProfileCBView
+from .views import RegistrationCBView
+from mom import settings
 
 app_name = "useractivity"
 

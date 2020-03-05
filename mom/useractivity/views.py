@@ -1,14 +1,21 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from django.views.generic import TemplateView, View
-
-from django.contrib.auth.forms import authenticate
-from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import authenticate
+from django.http import HttpResponse
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
+from django.views.generic import View
 
-from .forms import RegistrationForm, LoginForm, ProfileForm, Change_passwordForm
+from .forms import Change_passwordForm
+from .forms import LoginForm
+from .forms import ProfileForm
+from .forms import RegistrationForm
 from .models import Profile
 
 
