@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from django.contrib.messages import constants as messages
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'mom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,33 +120,32 @@ USE_L10N = True
 USE_TZ = True
 
 
-LOGIN_URL='/login'
+LOGIN_URL = '/login'
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
 ]
 # static_root=""
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-from django.contrib.messages import constants as messages
-MESSAGE_TAGS ={
-    messages.INFO:'alert-info',
-    messages.WARNING:'alert-warning',
-    messages.SUCCESS:'alert-success',
-    messages.ERROR:'alert-danger',
-} 
+MESSAGE_TAGS = {
+    messages.INFO: 'alert-info',
+    messages.WARNING: 'alert-warning',
+    messages.SUCCESS: 'alert-success',
+    messages.ERROR: 'alert-danger',
+}
 
 # SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 
 # EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 587    
+# EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'apikey'
 # EMAIL_HOST_PASSWORD = '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'
 # EMAIL_USE_TLS = True
