@@ -77,7 +77,8 @@ $(document).ready(function(){
             clearTimeout(timer); //cancel the previous timer.
             timer = null;
           }
-      }
+      
+    }
   });
 
   /** Stop button send the data in server **/
