@@ -7,5 +7,6 @@ app_name="meeting"
 urlpatterns = [
     path('<int:meeting_id>/text',views.MeetingtextCBView.as_view(),name='meetingtext'),
     path('all',views.ShowallMettingCBView.as_view(),name='allmeeting'), # to show all meeting 
-    path('save',views.SaveMeetingCBView.as_view(),name='savemeeting'),  # to save recent create meeting 
+    path('save',views.SaveMeetingCBView.as_view(),name='savemeeting'),  # to save recent create meeting
+    path('start/meeting_id=<int:meeting_id>',views.MeetingStartCBView.as_view(),name='start') 
 ]

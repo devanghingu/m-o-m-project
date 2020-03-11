@@ -3,7 +3,8 @@ from django.http import HttpResponse,JsonResponse
 from django.views.generic import View
 from django.contrib import messages
 from . import forms
-from .models import Meeting, Notes
+from .models import Meeting, Notes    
+
 class MeetingtextCBView(View):
         
     def get(self,request,*args, **kwargs):
@@ -23,8 +24,13 @@ class MeetingtextCBView(View):
 class ShowallMettingCBView(View):
     ''' To show all meeting '''
     #login required decorators
+           
     def get(self,request):
-        pass
+        context={}
+        
+        context['allmeeting']=Meeting.objects.filter(user=request.user)
+        # print(context)
+        return render(request,'meeting/meeting_all.html',context)
         # return render(request,'meeting/meetingtext.html')
     #login required decorators
     def post(self,request):
@@ -38,6 +44,7 @@ class SaveMeetingCBView(View):
     #login required decorators
     def post(self,request):
         meetingname=forms.meetingname(request.POST)
+        request.POST.get('meetingtext')
         if request.user.is_authenticated and meetingname.is_valid():
             meeting=meetingname.save(commit=False)
             meeting.user=request.user
@@ -45,4 +52,7 @@ class SaveMeetingCBView(View):
             return redirect('meeting:meetingtext',meeting_id=meeting.id)
         return render(request,'meeting/meeting_save.html',{'meetingname':meetingname})
 
-                        
+class MeetingStartCBView(View):
+    def get(self,request,*args, **kwargs):
+        if(Meeting.meeting_not_completed(self,meeting_id=kwargs['meeting_id'])):
+            return render(request,'useractivity/index.html')

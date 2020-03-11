@@ -22,7 +22,7 @@
                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops--><a class="nav-link"
                   id="user-block-toggle" href="#user-block" data-toggle="collapse"><em class="fa fa-user"></em></a></li>
             <!-- END User avatar toggle-->
-            
+
          </ul><!-- END Left navbar-->
          <!-- START Right Navbar-->
          <ul class="navbar-nav flex-row">
@@ -76,15 +76,14 @@
                </li><!-- END user info-->
                <!-- Iterates over all sidebar items-->
                <li class="nav-heading "><span data-localize="sidebar.heading.HEADER">Main Navigation</span></li>
-               <li class="active"><a href="{% url 'useractivity:index' %}">
+               <li {% if request.resolver_match.url_name == 'index' %}class="active"{% endif %}><a href="{% url 'useractivity:index' %}">
                      <em class="fa fa-home"></em>
                      <span>Home</span></a></li>
-               <!-- <li class="nav-heading "><span data-localize="sidebar.heading.COMPONENTS">Components</span></li>
-           -->
+               <!-- <li class="nav-heading "><span data-localize="sidebar.heading.COMPONENTS">Components</span></li>-->
                <li class="">
-                  <a href="{% url 'useractivity:profile' %}">
+                  <a href="{% url 'meeting:allmeeting' %}">
                      <em class="fa fa-handshake"></em>
-                     <span data-localize="sidebar.nav.chart.CHART">Meetings</span>
+                     <span data-localize="sidebar.nav.chart.CHART">All Meetings</span>
                   </a>
                </li>
                <li class="">
@@ -109,7 +108,7 @@
                      </li>
                   </ul>
                </li>
-               
+
             </ul><!-- END sidebar nav-->
          </nav>
       </div><!-- END Sidebar (left)-->

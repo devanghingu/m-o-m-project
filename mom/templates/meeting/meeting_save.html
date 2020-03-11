@@ -11,7 +11,7 @@
                <div class="card card-default">
                   <div class="card-header"> Give Your Meeting Name</div>
                   <div class="card-body">
-                     <form method="POST" name="savemeeting"> {%csrf_token%}
+                     <form method="POST" name="savemeeting" id="savemeeting"> {%csrf_token%}
                         <div class="form-row align-items-center">
                            <div class="col-md-10 col-xs-12 col-sm-8">
                               
@@ -20,7 +20,7 @@
                                  {{field.errors}}
                               {% endfor %}
                            </div>
-                           <div class="col-md-2 col-xs-4 col-sm-4"><button class="btn btn-primary mb-2" type="submit" onclick="">Continue</button></div>
+                           <div class="col-md-2 col-xs-4 col-sm-4"><button class="btn btn-primary mb-2" type="submit">Continue</button></div>
                         </div>
                      </form>
                   </div>
@@ -32,16 +32,43 @@
    </section>
 {% endblock body %}
 {% block script %}
+<script src="{%static 'js/jquery.validate.js'%}"></script>
 <script>
-  $(document).ready(function(){
-     var meeting_text = '';
-     obj = JSON.parse(localStorage.getItem('response_text'));
-     for(txt of obj.response_text){
-        meeting_text += txt;   
-     }
-     console.log(meeting_text);
-     $('#id_meetingtext').attr('value', meeting_text);
+   jQuery.validator.setDefaults({
+      debug: true,
+      success: "valid"
+    });
+    $( "#savemeeting").validate({
+      rules: {
+        id_name: {
+          required: true,
+          minlength: 6
+        }
+      },
+      messages:{
+         id_name:{
+            minlength: 'Meeting title must have more than 6 characters.',
+         }
+      }
+    });
+   $(document).ready(function(){  
+   var meeting_text = '';
+   if($('#id_meetingtext').val() =='' && localStorage.getItem('response_text') == null)
+   {
+      window.location.replace('all'); 
+   }
+   if(localStorage.getItem('response_text'))
+   {
+      obj = JSON.parse(localStorage.getItem('response_text'));
+      for(txt of obj.response_text){   meeting_text += txt;   }
+      console.log('meeting text applied to field');
+      $('#id_meetingtext').attr('value', meeting_text);
+      localStorage.removeItem('response_text');
+   }
+
+
   });
+
 </script>
  {% endblock script %}
 
