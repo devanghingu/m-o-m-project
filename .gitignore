@@ -1,4 +1,2 @@
-mom/media
-mom/db.sqlite3
-**/__pycache__/**
-*.pyc
+*.pycy
+db.sqlite3

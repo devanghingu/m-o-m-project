@@ -22,6 +22,7 @@
         </div>
         <div class="row">
             <div class="col-xl-12 col-md-12 col-xs-6">
+                {% include 'partial/messages.html' %}
                 <!-- loader start -->
                 <div class="text-center" id="loader-audio" hidden>
                     <h4 id="record-message">Please do note close browser or tabs. We are working on it </h4>
@@ -42,13 +43,11 @@
                             Meeting</button>&nbsp;
                         <button class="btn btn-danger" id='stop' hidden>End Meeting</button></div>
                 </div>
-                <!-- <a href="{% url 'meeting:meetingtext'%}">meetingtext</a> -->
             </div>
         </div>
     </div>
 </section><!-- Page footer-->
 {% endblock body %}
-
 
 {% block script %}
     <script src="{% static 'js/p5.js' %}"></script>
