@@ -2,6 +2,7 @@
 {% load static  %}
 {% block body %}    
 <section class="section-container">
+   <form method="POST">
     <!-- Page content-->
     <div class="content-wrapper">
        <div class="content-heading">Your meeting words</div><!-- START row-->
@@ -12,15 +13,20 @@
           
           <div class="offset-md-1 col-xl-10 col-md-10 col-xs-10">
              <!-- START card-->
+             
              <div class="card card-default">
-                <div class="card-header"><h4>Name : <u>{{meetingdata.name |title}}</u><h4>
+                <div class="card-header"><h4>Meeting Name :</h4>
+                  {% csrf_token %}
+                  <input type="text" name="meetingname" id="meetingname" value="{{meetingdata.name}}" />
+                  <input type="textarea" name="meetingtext"  hidden>
+                  <input type="hidden" name="meetingtnote" id="meetingtnote">
                   <div id="edit-meeting-btn-div">
                      <button type="button" id="edit-meeting-btn" class="btn btn-info">Edit</button> 
                   </div>
                </div>
                <hr/>
                 <div class="card-body">
-                   <div class="showbtn"><button class="btn btn-primary" onclick="getSelectedText(event)">copy</button></div>
+                   <div class="showbtn"><button class="btn btn-primary" type="button" onclick="getSelectedText(event)">copy</button></div>
                    <blockquote>
                       <p id="editablemeetingtext">
                          <pre id="meetingtext" class="selectable" onclick="showButton(event)" wrap="hard">{{meetingdata.meetingtext}}</pre>
@@ -43,14 +49,26 @@
         <br/>
         <div class="row">
             <div class="col-md-11 col-sm-6 col-xs-6 text-right">
-                <button type="button"class="btn btn-primary" id="done">Done</button>
+                <button type="submit" class="btn btn-success" id="done">Save</button>
             </div>
         </div>
     </div>
+   </form>
  </section>
  {% endblock body %}
  {% block script %}
       <script src="{% static 'vendor/html5sortable/dist/html5sortable.js' %}"></script>
-      <!-- <script src="{% static 'vendor/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js' %}"></script> -->
       <script src="{% static 'js/meetingtext.js'%}"></script>
+      <script>
+         {% if notes %}
+            var temp = {{ notes|safe }}   
+            var notes={}
+            for(obj in temp)
+            {
+               notes[temp[obj].pk]=temp[obj].fields.description 
+            }
+         {% else %}
+            var notes = {}  
+         {% endif %}
+      </script>
  {% endblock script %}

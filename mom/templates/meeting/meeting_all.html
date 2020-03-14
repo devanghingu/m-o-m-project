@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block body %}
 <section class="section-container">
     <!-- Page content-->
@@ -16,52 +15,30 @@
                       <table class="table table-striped table-bordered table-hover">
                          <thead>
                             <tr>
-                               <th>Meeting Id</th>
+                               <th>No.</th>
                                <th>Meeting Title</th>
-                               <th>Meeting completed ?</th>
+                               <th>Notes</th>
                                <th>Action</th>
                             </tr>
                          </thead>
                          <tbody>
                             {% for meeting in allmeeting  %}
                             <tr>
-                                <td>{{meeting.id}}</td>
+                                <td>{{ forloop.counter }}</td>
                                 <td>
-                                    <a href="{% url 'meeting:meetingtext' meeting_id=meeting.id %}">
-                                        {{meeting.name | title}}
-                                    </a>
-                                </td>
-                                <td>
-                                    <div class="badge badge-danger">{{meeting.completed}}</div>
-                                </td>
-                                <td>{% if meeting.completed %}
-                                    <button class="btn btn-oval btn-warning" type="button">Edit Text</button>
-                                {% else %}
-                                <button class="btn btn-oval btn-success" type="button">Start Meeting</button>
-                                {% endif %}
-                                        
+                                   {{meeting.name | title}}
+                                 </td>
+                                 <td>
+                                    <div class="badge bg-gray ">{{ meeting.notes_set.all.count }}</div>
+                                 </td>
+                                 <td>
+                                 <a class="btn btn-pill-left btn-dark" href="{% url 'meeting:meetingtext' meeting_id=meeting.id %}">Edit</a>
+                                 &nbsp;                           
+                                 <a class="btn btn-pill-right btn-warning" href="{% url 'meeting:deletemeeting' meeting_id=meeting.id %}" id="delete">Delete </a>                                        
                                 </td>
                             </tr>
 
                             {% endfor %}
-                            <tr>
-                               <td>Web Engine</td>
-                               <td>
-                                  <div data-sparkline="" data-bar-color="#7266ba" data-height="20" data-bar-width="5" data-bar-spacing="2" data-values="1,4,4,10,5,9,2" data-resize="true"><canvas style="display: inline-block; width: 47px; height: 20px; vertical-align: top;" width="47" height="20"></canvas></div>
-                               </td>
-                               <td>
-                                  <div class="badge badge-success">Complete</div>
-                               </td>
-                            </tr>
-                            <tr>
-                               <td>Nullam sit amet</td>
-                               <td>
-                                  <div data-sparkline="" data-bar-color="#23b7e5" data-height="20" data-bar-width="5" data-bar-spacing="2" data-values="1,4,4,7,5,9,4" data-resize="true"><canvas style="display: inline-block; width: 47px; height: 20px; vertical-align: top;" width="47" height="20"></canvas></div>
-                               </td>
-                               <td>
-                                  <div class="badge badge-warning">Delayed</div>
-                               </td>
-                            </tr>
                          </tbody>
                       </table>
                    </div><!-- END table-responsive-->
@@ -72,4 +49,24 @@
       </div>
    </section>    
 {% endblock body %}
-    
+
+
+{% block script %}
+   <script>
+
+      $(document).ready(function(){
+         $('#delete').click(function(){
+            var result = confirm('Are you Sure to delete meeting?');
+            if(result)
+            {
+               return true;
+            }
+            else 
+            {
+               return false;
+            }
+         });
+      });
+   </script>
+{% endblock script %}
+   

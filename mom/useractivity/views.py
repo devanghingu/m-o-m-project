@@ -134,7 +134,7 @@ class ProfileCBView(View):
 @method_decorator(login_required, name="dispatch")
 class Profile_uploadCBView(View):
     def post(self, request):
-
+        
         if request.user.is_authenticated:
             request.user.profile.profile = request.FILES["image"]
             request.user.profile.save()

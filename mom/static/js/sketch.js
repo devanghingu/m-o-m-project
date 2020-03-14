@@ -77,8 +77,7 @@ $(document).ready(function(){
             clearTimeout(timer); //cancel the previous timer.
             timer = null;
           }
-      
-    }
+      }
   });
 
   /** Stop button send the data in server **/
@@ -188,7 +187,21 @@ window.onbeforeunload = function() {
 
 function saveandredirect()
 {
-  localStorage.setItem('response_text',JSON.stringify({"response_text":response_text}));
-  window.location.replace('meeting/save');
-  // window.location.replace('meeting/'+meeting_id+'text')
+  var formdata = new FormData();
+  formdata.append('meeting_text',response_text)
+  $.ajax({
+      url:"/meeting/save",
+      method:'POST',
+      data:formdata,
+      processData:false,
+      contentType:false,
+      success:function(data){
+        window.location.replace('meeting/'+data.meeting_id+'/text');
+      },
+      error:function(error){
+          alert(error)
+      }
+  });
+  return false;
+
 } 
