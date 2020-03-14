@@ -110,30 +110,42 @@ $(document).ready(function(){
 
 /** do get request when the page is load **/
 function CheckServerResponse() {
-  $.ajax({
+  var abc= $.ajax({
     url: "http://3.6.222.183:8000",
+    // headers: { 'Connection': 'close' },
     method: "get",
     dataType: "json",
+    timeout:5000,
+    async:false,
     processData: false,
     contentType:false,
-    success:function(data){
-      $('#loader-audio').prop('hidden','true');
-      $('#record-meeting').removeAttr('disabled');
-      $('#canvas-area').show();
-      $('#record-message').hide();
-    },
-    error: function(){
+  }).done(function(data){
+    $('#loader-audio').prop('hidden','true');
+    $('#record-meeting').removeAttr('disabled');
+    $('#canvas-area').show();
+    $('#record-message').hide();
+    console.log('success executed');
+    stop1();
+    return true
+  })
+  .fail(function(xhr, status, errorThrown ){
       $('#record-message').html("<u>Opps..!!</u> <b>M-O-M is down right now.</b> contact administrator for more.!!!");
       $('#loader-audio').removeAttr('hidden');
       $('#record-meeting').prop('disabled','true');
       $('#canvas-area').hide();
       $('#record-message').show();
-      setInterval(CheckServerResponse,10000);
-    },
-    timeout: 5000
-  });
+      console.log('error executed');
+      stop1();
+      setTimeout(CheckServerResponse,10000);
+    });
+    setTimeout(function(){abc.abort();},300);
 }
-
+function stop1()
+{
+    $(document).ajaxStop(function() { 
+    console.log("AJAX request stopped"); 
+}); 
+}
 /** send ajex request using after one minute send request to server **/
 function sendajexrequest() {
   console.log("60 sec");
