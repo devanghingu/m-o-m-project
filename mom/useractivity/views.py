@@ -9,6 +9,8 @@ from django.views.generic import TemplateView, View
 from .forms import Change_passwordForm, LoginForm, ProfileForm, RegistrationForm
 from .models import Profile
 from django.utils.decorators import method_decorator
+from meeting.models import Meeting, Notes
+from django.contrib.auth.models import User
 
 @method_decorator(login_required,name='dispatch')
 class IndexTemplateView(TemplateView):
@@ -143,3 +145,10 @@ class Profile_uploadCBView(View):
         else:
             return JsonResponse(status=203,
                                 data={"error": "unauthorised request."})
+@method_decorator(login_required, name="dispatch")
+class AllnotesCBView(View):
+    def get(self,request,*args, **kwargs):
+        user=User.objects.filter(username=request.user).get()
+        notes=user.shared_notes.all()
+        
+        return render(request,'meeting/meeting_personal_notes.html',{'allnotes':notes})

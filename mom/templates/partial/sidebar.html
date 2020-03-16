@@ -80,13 +80,19 @@
                      <em class="fa fa-home"></em>
                      <span>Home</span></a></li>
                <!-- <li class="nav-heading "><span data-localize="sidebar.heading.COMPONENTS">Components</span></li>-->
-               <li class="">
+               <li {% if request.resolver_match.url_name == 'allmeeting' %}class="active"{% endif %}>
                   <a href="{% url 'meeting:allmeeting' %}">
                      <em class="fa fa-handshake"></em>
                      <span data-localize="sidebar.nav.chart.CHART">All Meetings</span>
                   </a>
                </li>
-               <li class="">
+               <li {% if request.resolver_match.url_name == 'notes' %}class="active"{% endif %}>
+                  <a href="{% url 'useractivity:notes' %}">
+                     <em class="fas fa-sticky-note"></em>
+                     <span data-localize="sidebar.nav.chart.CHART">Shared Notes</span>
+                  </a>
+               </li>
+               <li {% if request.resolver_match.url_name == 'profile' %}class="active"{% endif %}>
                   <a href="{% url 'useractivity:profile' %}">
                      <em class="fa fa-user"></em>
                      <span data-localize="sidebar.nav.chart.CHART">Profile Settings</span>

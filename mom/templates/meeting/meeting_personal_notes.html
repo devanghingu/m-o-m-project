@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load static %}
+<section class="section-container">
+    <!-- Page content-->
+      <div class="content-wrapper">
+         <div class="content-heading">Meeting : <u>{{allnotes.0.meeting.name}}</u> </div>
+         <!-- START row-->
+         <div class="row">
+            {% for notes in allnotes %}
+            <div class="col-lg-4 col-sm-6">
+                <div class="card card-default mb-3">
+                    <div class="card-header">Note {{ forloop.counter }}
+                        <!-- <a class="float-right" href="#" data-toggle="modal" data-target="#exampleModal" onclick="return setnoteid(note='{{notes.id}}');"><em class="fas fa-share"></em></a> -->
+                    </div>
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">Card Default card title</h5> -->
+                        <p class="card-text">{{notes.description}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+         </div>
+         <!-- END row-->
+      </div>
+   </section>    
+    <!-- Modal -->
+{% endblock body %}
+{% block script %}
+{% endblock script %}
+   

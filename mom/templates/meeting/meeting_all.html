@@ -6,6 +6,7 @@
          <div class="content-heading">Your All meetings</div>
          <!-- START row-->
          <div class="row">
+            {% if allmeeting %}
             <div class="col-xl-12">
                 <!-- START card-->
                 <div class="card card-default">
@@ -25,16 +26,10 @@
                             {% for meeting in allmeeting  %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>
-                                   {{meeting.name | title}}
-                                 </td>
+                                <td>{{meeting.name | title}}</td>
+                                 <td><div class="badge bg-gray ">{{ meeting.notes_set.all.count }}</div></td>
                                  <td>
-                                    <div class="badge bg-gray ">{{ meeting.notes_set.all.count }}</div>
-                                 </td>
-                                 <td>
-                                 <a class="btn btn-pill-left btn-dark" href="{% url 'meeting:meetingtext' meeting_id=meeting.id %}">Edit</a>
-                                 &nbsp;                           
-                                 <a class="btn btn-pill-right btn-warning" href="{% url 'meeting:deletemeeting' meeting_id=meeting.id %}" id="delete">Delete </a>                                        
+                                 <a class="btn btn-pill-left btn-dark" href="{% url 'meeting:meetingtext' meeting_id=meeting.id %}">Edit</a>&nbsp;<a class="btn btn-pill-right btn-warning" href="{% url 'meeting:deletemeeting' meeting_id=meeting.id %}" id="delete">Delete </a>                                        
                                 </td>
                             </tr>
 
@@ -43,7 +38,12 @@
                       </table>
                    </div><!-- END table-responsive-->
                 </div><!-- END card-->
-             </div>        
+             </div>  
+             {% else %}
+               <div class="offset-md-3 col-md-6">
+                  <div class="alert alert-warning alert-dismissible text-center fade show" role="alert"><strong >Opps,</strong> Meeting does't exist..!! </div>
+               </div> 
+            {% endif %}      
          </div>
          <!-- END row-->
       </div>
