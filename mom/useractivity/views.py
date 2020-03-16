@@ -1,24 +1,16 @@
 from django.contrib import messages
-from django.contrib.auth import login
-from django.contrib.auth import logout
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import login,logout,update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import authenticate
-from django.http import HttpResponse
-from django.http import JsonResponse
-from django.shortcuts import redirect
-from django.shortcuts import render
+from django.http import HttpResponse,JsonResponse
+from django.shortcuts import redirect,render
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView
-from django.views.generic import View
-
-from .forms import Change_passwordForm
-from .forms import LoginForm
-from .forms import ProfileForm
-from .forms import RegistrationForm
+from django.views.generic import TemplateView, View
+from .forms import Change_passwordForm, LoginForm, ProfileForm, RegistrationForm
 from .models import Profile
+from django.utils.decorators import method_decorator
 
-
+@method_decorator(login_required,name='dispatch')
 class IndexTemplateView(TemplateView):
     """ index url view render index.html """
 
@@ -54,11 +46,17 @@ class LoginCBView(View):
 
     def get(self, request):
         """ render authentication form in index html """
+        if request.user.is_authenticated:
+            messages.info(request,'you are alread logged in')
+            return redirect('useractivity:index')
         context = {"form": LoginForm()}
         return render(request, "useractivity/login.html", context)
 
     def post(self, request):
         """ authentication of user and render the home html """
+        if request.user.is_authenticated:
+            messages.info(request,'you are alread logged in')
+            return redirect('useractivity:index')
         login_form = LoginForm(request=request, data=request.POST)
 
         if login_form.is_valid():
@@ -77,17 +75,19 @@ class LoginCBView(View):
         messages.error(request, "Invalid Input Please Enter Valid information")
         return render(request, "useractivity/login.html", {"form": login_form})
 
-
 class LogoutCBView(View):
     """ logout url view,"""
 
     def get(self, request):
         """ Logout the user """
-        messages.success(request, "Logout Success.!!")
-        logout(request)
-        return redirect("useractivity:login")
-
-
+        if request.user.is_authenticated:
+            messages.success(request, "Logout Success.!!")
+            logout(request)
+            return redirect("useractivity:login")
+        else:
+            messages.error(request, "you must have to logged-in before perform action")
+            return redirect("useractivity:login")
+            
 @method_decorator(login_required, name="dispatch")
 class ChangePasswordCBView(View):
     """ change_password url view """
@@ -142,4 +142,4 @@ class Profile_uploadCBView(View):
                                 data={"url": request.user.profile.profile.url})
         else:
             return JsonResponse(status=203,
-                                data={"error": "unauthorize request.!!"})
+                                data={"error": "unauthorised request."})

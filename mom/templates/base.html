@@ -26,6 +26,9 @@
    <!-- =============== BOOTSTRAP STYLES ===============-->
    <link rel="stylesheet" href="{% static 'vendor/loaders.css/loaders.css' %}">
    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" id="bscss' %}">
+   <link rel="stylesheet" href="{% static 'vendor/select2/dist/css/select2.css'%}">
+   <link rel="stylesheet" href="{% static 'vendor/@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.css'%}">
+   <link rel="stylesheet" href="{% static 'vendor/bootstrap-wysiwyg/css/style.css'%}">
    <!-- =============== APP STYLES ===============-->
    <link rel="stylesheet" href="{% static 'css/app.css' %}" id="maincss' %}">
    <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -53,7 +56,8 @@
    <script src="{% static 'vendor/jquery/dist/jquery.js' %}"></script>
    <script src="{% static 'vendor/popper.js/dist/umd/popper.js' %}"></script>
    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.js' %}"></script>
-   
+   <script src="{%static 'vendor/inputmask/dist/jquery.inputmask.bundle.js'%}"></script><!-- WYSIWYG-->
+   <script src="{%static 'vendor/select2/dist/js/select2.full.js'%}"></script>
    <script src="{% static 'js/app.js' %}"></script>
    {% block script %}
    

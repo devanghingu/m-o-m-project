@@ -1,14 +1,18 @@
-from django.shortcuts import render,redirect
-from django.http import HttpResponse,JsonResponse
-from django.views.generic import View
 from django.contrib import messages
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.views.generic import View
+from django.http import HttpResponse,JsonResponse
+from django.shortcuts import render,redirect
 from . import forms
 from .models import Meeting,Notes
-import json
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail 
+# import json
 from django.core.serializers import serialize
-from django.contrib.auth.decorators import login_required
 
 @method_decorator(login_required,name='dispatch')
 class MeetingStartCBView(View):
@@ -90,3 +94,45 @@ class DeleteMeetingCBView(View):
     def get(self,request,*args, **kwargs):
         Meeting.objects.filter(user=request.user,pk=kwargs['meeting_id']).delete()
         return redirect('meeting:allmeeting')
+
+@method_decorator(login_required,name='dispatch')
+class ShowAllNotesCBView(View):
+    def get(self,request,*args, **kwargs):
+        context={}
+        context['alluser']=User.objects.filter(is_superuser=False).exclude(username=request.user)
+        context['allnotes']=Notes.objects.filter(meeting=kwargs['meeting_id'],meeting__user=request.user)
+        return render(request,'meeting/meeting_notes_all.html',context)
+    def post(self,request,*args, **kwargs):
+        context={}
+        note_id=request.POST.get('note_id')
+        note=Notes.objects.filter(id=note_id,meeting=kwargs['meeting_id'],meeting__user=request.user).get()
+        alluser=request.POST.getlist('users')
+        
+        
+        if note:
+            for user in map(int,alluser[0].split(',')):
+                user=User.objects.get(id=user)
+                if(user):
+                    note.shared.add(user)
+                    message = Mail( from_email='info@mom.com',
+                                    to_emails=user.email,
+                                    subject='{0} is shared notes with you'.format(request.user),
+                                    html_content="""<strong>
+                                        Hello {0},
+                                            <u>{1}</u> is shared notes with you,<br/> 
+                                            You can check all notes at your accounts.<br/>
+                                        Thanks. 
+                                    </strong>""".format(user.get_full_name(),request.user.first_name))
+                    try:
+                        sg = SendGridAPIClient('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')
+                        response = sg.send(message)
+                        print(response.status_code," done")
+                        
+                    except Exception as e:
+                        print(e.message)
+                        return JsonResponse(context,safe=False)
+                        
+        context['message1']='done'
+        note.save()
+        context['addeduser']=note.shared.all()
+        return JsonResponse(context,safe=False)

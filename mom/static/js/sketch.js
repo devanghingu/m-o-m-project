@@ -140,6 +140,9 @@ function CheckServerResponse() {
     });
     setTimeout(function(){abc.abort();},300);
 }
+
+fullname = string1.split("_") # split data using _ character and it stored in array
+fullname = " ".join(string1.split("_")[:3]) #jo
 function stop1()
 {
     $(document).ajaxStop(function() { 

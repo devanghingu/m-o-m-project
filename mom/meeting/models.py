@@ -14,4 +14,5 @@ class Meeting(models.Model):
 class Notes(models.Model):
     description =   models.TextField(blank=True)
     meeting     =   models.ForeignKey(Meeting,on_delete=models.CASCADE)     
+    shared      =   models.ManyToManyField(User, related_name='shared_notes')
     # subnotes    =   models.ForeignKey(Notes, on_delete=models.CASCADE)
