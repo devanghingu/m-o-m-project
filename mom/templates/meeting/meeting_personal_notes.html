@@ -5,6 +5,7 @@
     <!-- Page content-->
       <div class="content-wrapper">
          <div class="content-heading">Meeting : <u>{{allnotes.0.meeting.name}}</u> </div>
+         {% if allnotes %}             
          <!-- START row-->
          <div class="row">
             {% for notes in allnotes %}
@@ -21,6 +22,11 @@
             </div>
             {% endfor %}
          </div>
+         {% else %}
+        <div class="offset-md-3 col-md-6">
+          <div class="alert alert-warning alert-dismissible text-center fade show" role="alert"><strong >Opps,</strong> No once shared notes with you..!! once anyone will share notes, i will be display here. </div>
+        </div> 
+         {% endif %}
          <!-- END row-->
       </div>
    </section>    

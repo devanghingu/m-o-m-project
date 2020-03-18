@@ -6,6 +6,10 @@
       <div class="content-wrapper">
          <div class="content-heading">Meeting : <u>{{allnotes.0.meeting.name}}</u> </div>
          <!-- START row-->
+        
+        {% if allnotes %}
+          
+          
          <div class="row">
             {% for notes in allnotes %}
             <div class="col-lg-4 col-sm-6">
@@ -15,7 +19,6 @@
                     </div>
                     <div class="card-body">
                         <!-- <h5 class="card-title">Card Default card title</h5> -->
-                        {{notes.shared.all}}
                         <p class="card-text">{{notes.description}}</p>
                         <input type="hidden" id="shared{{notes.id}}" value="[{%for i in notes.shared.all %}{{i.id}},{% endfor %}]">
                     </div>
@@ -23,6 +26,12 @@
             </div>
             {% endfor %}
          </div>
+         {% else %}
+        <div class="offset-md-3 col-md-6">
+          <div class="alert alert-warning alert-dismissible text-center fade show" role="alert"><strong >Opps,</strong> Notes does't exist..!! but you can create notes using editing a meeting </div>
+        </div> 
+         {% endif %}
+
          <!-- END row-->
       </div>
    </section>    

@@ -27,7 +27,13 @@
                             <tr>
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{meeting.name | title}}</td>
-                                 <td><div class="badge bg-gray ">{{ meeting.notes_set.all.count }}</div></td>
+                                 <td>
+                                    <a href="{%url 'meeting:meetingnotes' meeting_id=meeting.id %}">
+                                       <div class="badge bg-gray ">
+                                          {{ meeting.notes_set.all.count }}
+                                       </div>
+                                    </a>
+                                 </td>
                                  <td>
                                  <a class="btn btn-pill-left btn-dark" href="{% url 'meeting:meetingtext' meeting_id=meeting.id %}">Edit</a>&nbsp;<a class="btn btn-pill-right btn-warning" href="{% url 'meeting:deletemeeting' meeting_id=meeting.id %}" id="delete">Delete </a>                                        
                                 </td>
