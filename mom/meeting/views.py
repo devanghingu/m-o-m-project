@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -107,8 +108,7 @@ class ShowAllNotesCBView(View):
         note_id=request.POST.get('note_id')
         note=Notes.objects.filter(id=note_id,meeting=kwargs['meeting_id'],meeting__user=request.user).get()
         alluser=request.POST.getlist('users')
-        
-        
+
         if note:
             for user in map(int,alluser[0].split(',')):
                 user=User.objects.get(id=user)
@@ -134,5 +134,30 @@ class ShowAllNotesCBView(View):
                         
         context['message1']='done'
         note.save()
-        context['addeduser']=note.shared.all()
         return JsonResponse(context,safe=False)
+
+
+@method_decorator(login_required,name='dispatch')
+class ShareNoteCBView(View):
+    def get(self,request,*args, **kwargs):
+        query = request.GET.get('q', None)
+        if query:
+            alluser = User.objects.filter(Q(first_name__startswith=query)|Q(username__startswith=query)|Q(email__startswith=query),is_superuser=False).exclude(username=request.user)
+            results  = list(map(lambda x:{'id':x.pk,'text':x.get_full_name()} ,alluser))
+            return JsonResponse(results,safe=False)
+        else:
+            return JsonResponse(data={'success': False,'errors': 'No mathing items found'})
+
+@method_decorator(login_required,name='dispatch')
+class SearchUserCBView(View):
+    def get(self,request,*args, **kwargs):
+        note_id = request.GET.get('notes_id',None)
+        if note_id:
+            alluser = Notes.objects.get(id=note_id).shared.all()
+            results  = list(map(lambda x:{'id':x.pk,'text':x.get_full_name()} ,alluser))
+            return JsonResponse(results,safe=False)
+        else:    
+            return JsonResponse(data={'errors': 'Notes not share..!'})
+
+
+    

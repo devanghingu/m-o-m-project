@@ -1,107 +1,147 @@
 {% extends 'base.html' %}
-{% block body %}
 {% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}" id="maincss' %}">
+{% endblock style %}
+
+{% block body %}
 <section class="section-container">
-    <!-- Page content-->
-      <div class="content-wrapper">
-         <div class="content-heading">Meeting : <u>{{allnotes.0.meeting.name}}</u> </div>
-         <!-- START row-->
-        
-        {% if allnotes %}
-          
-          
-         <div class="row">
-            {% for notes in allnotes %}
-            <div class="col-lg-4 col-sm-6">
-                <div class="card card-default mb-3">
-                    <div class="card-header">Note {{ forloop.counter }}
-                        <a class="float-right" href="#" data-toggle="modal" data-target="#exampleModal" onclick="return setnoteid(note='{{notes.id}}');"><em class="fas fa-share"></em></a>
-                    </div>
-                    <div class="card-body">
-                        <!-- <h5 class="card-title">Card Default card title</h5> -->
-                        <p class="card-text">{{notes.description}}</p>
-                        <input type="hidden" id="shared{{notes.id}}" value="[{%for i in notes.shared.all %}{{i.id}},{% endfor %}]">
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-         </div>
-         {% else %}
-        <div class="offset-md-3 col-md-6">
-          <div class="alert alert-warning alert-dismissible text-center fade show" role="alert"><strong >Opps,</strong> Notes does't exist..!! but you can create notes using editing a meeting </div>
-        </div> 
-         {% endif %}
+  <!-- Page content-->
+  <div class="content-wrapper">
+    <div class="content-heading">Meeting : <u>{{allnotes.0.meeting.name}}</u> </div>
+    <!-- START row-->
 
-         <!-- END row-->
-      </div>
-   </section>    
-    <!-- Modal -->
-{% endblock body %}
-{% block script %}
+    {% if allnotes %}
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="sharenotestitle" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="sharenotestitle">Share notes with People</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group row">
-            <div class="col-md-10">
-               {% csrf_token %} 
-              <input type="hidden" name="note_id" id="note_id">
-              
-              <select class="custom-select" name="users" id="users" multiple>
-                <option selected>Select People to Share note</option>
-                
-                {% for user in alluser %}
-                  <option value="{{user.id}}">{{user.get_full_name}}</option>
-                {% endfor %}
-                  
-              </select>
-            </div>
+    <div class="row">
+      {% for notes in allnotes %}
+      <div class="col-lg-4 col-sm-6">
+        <div class="card card-default mb-3">
+          <div class="card-header">Note {{ forloop.counter }}
+            <a class="float-right" href="#" data-toggle="modal" data-target="#exampleModal"
+              onclick="return setnoteid(note='{{notes.id}}');"><em class="fas fa-share"></em></a>
+          </div>
+          <div class="card-body">
+            <!-- <h5 class="card-title">Card Default card title</h5> -->
+            <p class="card-text">{{notes.description}}</p>
+            <input type="hidden" id="shared{{notes.id}}" value="[{%for i in notes.shared.all %}{{i.id}},{% endfor %}]">
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="sharewithpeople(Event)">Share</button>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="offset-md-3 col-md-6">
+      <div class="alert alert-warning alert-dismissible text-center fade show" role="alert"><strong>Opps,</strong> Notes
+        does't exist..!! but you can create notes using editing a meeting </div>
+    </div>
+    {% endif %}
+
+    <!-- END row-->
+  </div>
+</section>
+<!-- Modal -->
+{% endblock body %}
+{% block script %}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="sharenotestitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sharenotestitle">Share Notes with People</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <div class="col-md-10">
+            {% csrf_token %}
+            <input type="hidden" name="note_id" id="note_id">
+            <select class="js-data-example-ajax" multiple="multiple" id="users" style="width:100%;"></select>
+          </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="sharewithpeople(Event)">Share</button>
       </div>
     </div>
   </div>
+</div>
 
+<script src="{% static 'js/select2.min.js' %}"></script>
 <script>
-function setnoteid(note=0)
-{
-  console.log(note);
-  $('#note_id').val(note);
 
-}
-function sharewithpeople(e) 
-{
-  var formdata= new FormData();
-  formdata.append('csrfmiddlewaretoken',$('input[name=csrfmiddlewaretoken]').val());
-  formdata.append('note_id',$('#note_id').val());
-  formdata.append('users',$('#users').val());
-  $.ajax({
-    url:window.location.pathname,
-    method:'POST',
-    data:formdata,
-    enctype: 'application/x-www-form-urlencoded',
-    processData:false,
-    contentType:false,
-    success:function(data){
-      alert(data);
-    },
-    error:function(error){
+  $(document).ready(function () {
+    $('#users').select2({
+      ajax: {
+        url: "{% url 'meeting:sharenote' %}",
+        dataType: "json",
+        type: "GET",
+        processResults: function (obj) {
+          return {results:obj}
+        }
+      },
+      minimumInputLength: 1,   
+      placeholder: 'Select User',
+    });
+  });
+  var user=[]
+  $('#users').on('select2:select select2:unselect', function(e) {
+    user = $(this).val()
+  });
+  
+  function setnoteid(note = 0) {
+    user=[]
+    //console.log(note);
+    $('#note_id').val(note);
+    $('#users').empty();
+
+   // Get User list base on the note
+    $.ajax({
+      url: "{% url 'meeting:searchuser'%}",
+      method: 'GET',
+      dataType:'json',
+      data: {
+        'notes_id':note
+      },
+      success: function (data) {
+        for(obj in data){
+          // Append it to the select  
+          user.push(data[obj].id.toString())
+          var newOption = new Option(data[obj].text,data[obj].id, true, true);
+          $('#users').append(newOption).trigger('change');
+        }
+      },
+      error: function (error) {
         alert(error.error);
-    }
-});
-}
+      }
+    });
+  }
+
+
+  function sharewithpeople(e) {
+    var formdata = new FormData();
+    formdata.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+    formdata.append('note_id', $('#note_id').val());
+    formdata.append('users', user);
+    $.ajax({
+      url: window.location.pathname,
+      method: 'POST',
+      data: formdata,
+      enctype: 'application/x-www-form-urlencoded',
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        alert("Notes Share Successfull..!");
+      },
+      error: function (error) {
+        alert(error.error);
+      }
+    });
+  }
 </script>
 {% endblock script %}
-   

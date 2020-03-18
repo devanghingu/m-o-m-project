@@ -12,5 +12,7 @@ urlpatterns = [
     path('all',views.ShowallMettingCBView.as_view(),name='allmeeting'), # to show all meeting 
 
     path('save',views.SaveMeetingCBView.as_view(),name='savemeeting'),  # to save recent create meeting
-    path('<int:meeting_id>/delete',views.DeleteMeetingCBView.as_view(),name='deletemeeting')
+    path('<int:meeting_id>/delete',views.DeleteMeetingCBView.as_view(),name='deletemeeting'),
+    path('sharenote',views.ShareNoteCBView.as_view(),name='sharenote'),  # to call ajax for shared note with user
+    path('searchuser',views.SearchUserCBView.as_view(),name='searchuser'),
 ]
