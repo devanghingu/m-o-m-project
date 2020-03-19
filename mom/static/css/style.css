@@ -52,3 +52,10 @@
     box-shadow: 0 0 3px 0px;
 }
 /** end meeting text css **/
+
+@media screen and (max-width: 600px) {
+    .p5Canvas {
+      height: inherit !important;
+      width:  inherit !important;
+    }
+  }

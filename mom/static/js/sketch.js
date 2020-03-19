@@ -90,6 +90,7 @@ $(document).ready(function(){
       $('#record-meeting').prop('disabled','false');
     }else if(request_counter==response_counter && stop_meeting==1){
       /** when stop meeting after meeting pause **/
+      
       saveandredirect();
     }
     $(this).attr('hidden','true');
@@ -101,6 +102,7 @@ $(document).ready(function(){
 
       timer = null;
     }
+    $('#record-message').show();
     $("#loader-audio").removeAttr("hidden");
     $("#canvas-area").hide();
     $("#record-meeting").prop("disabled", "true");
@@ -124,7 +126,7 @@ function CheckServerResponse() {
     $('#record-meeting').removeAttr('disabled');
     $('#canvas-area').show();
     $('#record-message').hide();
-    console.log('success executed');
+    console.log('connected with server');
     stop1();
     return true
   })
@@ -134,7 +136,7 @@ function CheckServerResponse() {
       $('#record-meeting').prop('disabled','true');
       $('#canvas-area').hide();
       $('#record-message').show();
-      console.log('error executed');
+      console.log('Server not responding');
       stop1();
       setTimeout(CheckServerResponse,10000);
     });

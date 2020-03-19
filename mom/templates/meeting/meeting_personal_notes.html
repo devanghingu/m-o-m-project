@@ -4,7 +4,7 @@
 <section class="section-container">
     <!-- Page content-->
       <div class="content-wrapper">
-         <div class="content-heading">Meeting : <u>{{allnotes.0.meeting.name}}</u> </div>
+         <div class="content-heading">All Notes <u></u> </div>
          {% if allnotes %}             
          <!-- START row-->
          <div class="row">
@@ -12,7 +12,13 @@
             <div class="col-lg-4 col-sm-6">
                 <div class="card card-default mb-3">
                     <div class="card-header">Note {{ forloop.counter }}
-                        <!-- <a class="float-right" href="#" data-toggle="modal" data-target="#exampleModal" onclick="return setnoteid(note='{{notes.id}}');"><em class="fas fa-share"></em></a> -->
+                        <a class="float-right" data-toggle="tooltip" title=""  data-tool="" data-original-title="Meeting: {{notes.meeting.name}}">
+                            <em class="fas fa-users"></em>
+                        </a>
+                        <a class="float-right" data-toggle="tooltip" title="" data-tool=""  data-original-title="Shared by: {{notes.meeting.user}}">
+                            <em class="fas fa-user"></em>
+                        </a>
+                        
                     </div>
                     <div class="card-body">
                         <!-- <h5 class="card-title">Card Default card title</h5> -->

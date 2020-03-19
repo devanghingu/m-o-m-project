@@ -102,6 +102,7 @@ class ShowAllNotesCBView(View):
         context={}
         context['alluser']=User.objects.filter(is_superuser=False).exclude(username=request.user)
         context['allnotes']=Notes.objects.filter(meeting=kwargs['meeting_id'],meeting__user=request.user)
+        
         return render(request,'meeting/meeting_notes_all.html',context)
     def post(self,request,*args, **kwargs):
         context={}

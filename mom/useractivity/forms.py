@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm,PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import Profile
+from django import forms
 
 class RegistrationForm(UserCreationForm):
     
@@ -14,9 +15,18 @@ class RegistrationForm(UserCreationForm):
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class':'form-control','placeholder':self.fields[field].label})
         
-        
-class LoginForm(AuthenticationForm):
+    def clean_first_name(self):
+        firstname=self.cleaned_data['first_name']
+        if len(firstname) <=0:
+            raise forms.ValidationError("First Name should not blank")
+        return firstname
+    def clean_last_name(self):
+        lastname=self.cleaned_data['last_name']
+        if len(lastname) <=0:
+            raise forms.ValidationError("last_name should not blank")        
+        return lastname
 
+class LoginForm(AuthenticationForm):
     class Meta:
         model=User
         fields=['username','password']

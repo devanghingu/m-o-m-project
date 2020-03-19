@@ -35,7 +35,7 @@
                                     </a>
                                  </td>
                                  <td>
-                                 <a class="btn btn-pill-left btn-dark" href="{% url 'meeting:meetingtext' meeting_id=meeting.id %}">Edit</a>&nbsp;<a class="btn btn-pill-right btn-warning" href="{% url 'meeting:deletemeeting' meeting_id=meeting.id %}" id="delete">Delete </a>                                        
+                                 <a class="btn btn-pill-left btn-dark" href="{% url 'meeting:meetingtext' meeting_id=meeting.id %}">Edit</a>&nbsp;<a class="btn btn-pill-right btn-warning" href="{% url 'meeting:deletemeeting' meeting_id=meeting.id %}" onclick=" return delete_confirm();" >Delete </a>                                        
                                 </td>
                             </tr>
 
@@ -59,10 +59,8 @@
 
 {% block script %}
    <script>
-
-      $(document).ready(function(){
-         $('#delete').click(function(){
-            var result = confirm('Are you Sure to delete meeting?');
+         function delete_confirm(){
+            var result = confirm('Are you Sure to delete a meeting..?');
             if(result)
             {
                return true;
@@ -71,8 +69,7 @@
             {
                return false;
             }
-         });
-      });
+         }
    </script>
 {% endblock script %}
    
