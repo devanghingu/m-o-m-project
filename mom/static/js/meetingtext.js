@@ -10,7 +10,7 @@ function edit_item_can_btn() {
    $("#edit-meeting-btn").prop('disabled', false);
 }
 
-function getSelectedText(e) {
+function getSelectedText(e) {   //this is call when we click on show button(add to note) button
    selectedtext = "";
    if (window.getSelection().toString().length > 7) {
       selectedtext = window.getSelection().toString();
@@ -34,7 +34,7 @@ function getSelectedText(e) {
       $('.sortable').append(newli);
    }
 }
-function showButton(e) {
+function showButton(e) {  //when we select the first time this call
    e.stopPropagation();
    var meetingtext = document.getElementById("meetingtext");
    var tar = e.target.getBoundingClientRect();
