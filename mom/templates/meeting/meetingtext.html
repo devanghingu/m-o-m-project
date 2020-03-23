@@ -18,19 +18,19 @@
                 <div class="card-header"><h4>Meeting Name :</h4>
                   {% csrf_token %}
                   <input type="text" name="meetingname" id="meetingname" value="{{meetingdata.name}}" />
-                  <input type="textarea" name="meetingtext"  hidden>
+                  <input type="textarea" name="meetingtext" value="{{meetingdata.meetingtext}}" hidden>
                   <input type="hidden" name="meetingtnote" id="meetingtnote">
-                  <div id="edit-meeting-btn-div">
-                     <button type="button" id="edit-meeting-btn" class="btn btn-info">Edit</button> 
-                  </div>
                </div>
                <hr/>
                 <div class="card-body">
                    <div class="showbtn"><button class="btn btn-primary" type="button" onclick="getSelectedText(event)">Add to Notes</button></div>
                    <blockquote>
-                      <p id="editablemeetingtext">
-                         <pre id="meetingtext" class="selectable" onclick="showButton(event)" wrap="hard">{{meetingdata.meetingtext}}</pre>
-                      </p>
+                      <!-- <p id="editablemeetingtext">
+                         <pre id="meetingtext" class="selectable" onclick="showButton(event)" wrap="hard"></pre>
+                      </p> -->
+                      <pre id="meetingtext" contenteditable="true" onclick="showButton(event)" wrap="hard">
+                        {{ meetingdata.meetingtext|safe }}
+                      </pre>
                    </blockquote>
                 </div>
              </div>

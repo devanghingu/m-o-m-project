@@ -1,13 +1,12 @@
 let meeting_text, note_text, note;
 let edit_item_btn = "<div style='text-align:right;'>" +
 "<a href='javascript:void(0);' id='edit_note_btn' class='btn btn-primary btn-sm'><i class='fa fa-fw fa-pencil-alt'></i></a>&nbsp;"+
-"<a href='javascript:void(0);' id='remove_note_btn' class='btn btn-danger btn-sm'><i class='fa fa-fw fa-times'></i></a>" +
+"<a href='javascript:void(0);' id='remove_note_btn' class='btn btn-danger btn-sm'><i class='fas fa-trash-alt'></i></a>" +
 "</div>";
 
 function edit_item_can_btn() {
    $('#meetingtext').html(meeting_text);
    $('#meetingtext').attr('onclick', 'showButton(event)');
-   $("#edit-meeting-btn").prop('disabled', false);
 }
 
 function getSelectedText(e) {   //this is call when we click on show button(add to note) button
@@ -50,22 +49,8 @@ $(document).on("click", function (e) {
    $('.showbtn').hide();
 });
 
-$(document).ready(function () {
-   $('#edit-meeting-btn').click(function () {
-      meeting_text = $('#meetingtext').text();
-      var textarea = "<textarea class='form-control input-large' id='meeting-textarea' onkeypress='expandtextarea(event)' placeholder='you can add new content' wrap='hard'  cols='110'></textarea>" +
-         "<div class='editable-buttons editable-buttons-bottom' style='margin-top:5px;'>" +
-         "<button type='button' id='edit-meeting-save-btn' class='btn btn-primary btn-sm' onclick='edit_meeting_save_btn()'><i class='fa fa-fw fa-check'></i></button> &nbsp;" +
-         "<button type='button' id='edit-meeting-can-btn' class='btn btn-danger btn-sm' onclick='edit_meeting_can_btn()'><i class='fa fa-fw fa-times'></i></button></div>";
-
-      $('#meetingtext').removeAttr('onclick');
-      $('#meetingtext').html(textarea);
-      $('#meeting-textarea').val(meeting_text);
-      $('#meeting-textarea').height($('#meeting-textarea')[0].scrollHeight);
-      $("#edit-meeting-btn").prop('disabled', true);
-   });
-
-   
+$(document).ready(function () {  
+ 
    for(id in notes){
       newli = $(document.createElement('li'));
       newli.addClass('list-group-item');
@@ -93,13 +78,13 @@ function edit_meeting_save_btn() {
    var meeting_text = $('#meeting-textarea').val();
    $('#meetingtext').html(meeting_text);
    $('#meetingtext').attr('onclick', 'showButton(event)');
-   $("#edit-meeting-btn").prop('disabled', false);
+   
 }
 
 function edit_meeting_can_btn() {
    $('#meetingtext').html(meeting_text);
    $('#meetingtext').attr('onclick', 'showButton(event)');
-   $("#edit-meeting-btn").prop('disabled', false);
+   
 }
 
 
@@ -115,7 +100,6 @@ $(document).on('click', 'a#edit_note_btn', function () {
    $('#note-textarea').val(note_text);
 
    $('a#edit_note_btn').prop('disabled', true);
-   $("#edit-meeting-btn").prop('disabled', true);
    $('#meetingtext').removeAttr('onclick');
 });
 
@@ -129,7 +113,6 @@ $(document).on('click', 'button#note_save_btn', function () {
    note.html($('#note-textarea').val() + edit_item_btn);
    notes[note.attr('dict_id')]=note.text()
    $('a#edit_note_btn').prop('disabled', false);
-   $("#edit-meeting-btn").prop('disabled', false);
    $('#meetingtext').attr('onclick', 'showButton(event)');
 });
 
@@ -137,11 +120,11 @@ $(document).on('click', 'button#note_can_btn', function () {
    var note = $(this).closest('li');
    note.html(note_text + edit_item_btn);
    $('a#edit_note_btn').prop('disabled', false);
-   $("#edit-meeting-btn").prop('disabled', false);
    $('#meetingtext').attr('onclick', 'showButton(event)');
 });
 
 $('#done').click(function (){
-   $("input[name=meetingtext]").attr('value',$("#meetingtext").html())
+   // $("input[name=meetingtext]").attr('value',$("#meetingtext").html())
+   $("input[name=meetingtext]").val($("#meetingtext").html());
    $("#meetingtnote").attr('value',JSON.stringify(notes)) 
 });

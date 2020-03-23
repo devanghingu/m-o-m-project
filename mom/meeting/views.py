@@ -109,8 +109,9 @@ class ShowAllNotesCBView(View):
         note_id=request.POST.get('note_id')
         note=Notes.objects.filter(id=note_id,meeting=kwargs['meeting_id'],meeting__user=request.user).get()
         alluser=request.POST.getlist('users')
-
+    
         if note:
+            note.shared.clear()
             for user in map(int,alluser[0].split(',')):
                 user=User.objects.get(id=user)
                 if(user):
